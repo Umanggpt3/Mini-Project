@@ -12,10 +12,11 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
         let xhr = new XMLHttpRequest();
         let theUrl = "http://127.0.0.1:8000/Extension_data/";
         xhr.open("POST", theUrl, true);
-
+        let r;
         xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4){
-                alert("Entered");
+            if (xhr.readyState == 4 && this.status == 200){
+                r = this.responseText;
+                console.log(r);
             }
             else{
                 alert("Not Entered");
