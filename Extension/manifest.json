@@ -21,10 +21,10 @@
 	"content_scripts": [
 		{
 			"matches": ["https://twitter.com/*","http://twitter.com/*","https://www.twitter.com/*","http://www.twitter.com/*"],
-			"js": ["jquery-3.4.1.min.js","content.js"]
+			"js": ["jquery-3.4.1.min.js","content.js","background.js"]
 		}
 	],
-	"permissions": ["storage","activeTab","declarativeContent","contextMenus"],
+	"permissions": ["tabs","storage","activeTab","declarativeContent","contextMenus","<all_urls>"],
 	"icons": {
 		"16": "images/get_started16.png",
 		"32": "images/get_started32.png",

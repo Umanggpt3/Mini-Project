@@ -43,12 +43,12 @@ def getTweet(request):
     url = 'https://newsapi.org/v2/everything?'
 
     parameters = {
-        'q': ' AND '.join(continuous_chunk),
+        'q': ' OR '.join(continuous_chunk),
         'pageSize': 5,
         'apiKey': api_key,
         'language': 'en', 
-        'from': '2020-01-06',
-        'to': '2020-02-06',
+        'from': '2020-04-01',
+        'to': '2020-05-01',
         'sortBy': 'publishedAt',
     }
 
