@@ -1,6 +1,6 @@
 chrome.contextMenus.create({
     id: "select",
-    title: "THINCK",
+    title: "Select",
     contexts: ["selection"]
 });
 
@@ -12,9 +12,15 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
         let theUrl = "http://127.0.0.1:8000/Extension_data/";
         xhr.open("POST", theUrl, true);
         let r, res;
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && this.status == 200){
-                r = this.responseText;
+        xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
+        xhr.send(tweet_string);
+
+        xhr.onload = function() {
+            r = this.responseText;
+            if(r == '0') {
+                alert("No Articles Found!");
+                this.abort();
+            } else {
                 console.log(r);
                 localStorage.sharedData = r;
                 r = JSON.parse(r);
@@ -25,12 +31,14 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
                 let newTabURL = chrome.extension.getURL('print.html');
                 chrome.tabs.create({url: newTabURL, active: true});
             }
-            else{
-                //alert("Not Entered");
-            }
         };
 
-        xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-        xhr.send(tweet_string);
+        xhr.onerror = function() {
+            alert("Can't find relevant Articles.");
+        }
+
+        xhr.onabort = function() {
+            alert("Aborted!");
+        }
     }
 });
