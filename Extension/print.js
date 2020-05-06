@@ -4,14 +4,9 @@ console.log(newsData);
 
 let newsArticles = newsData.articles;
 let noOfArticles = newsData.articles.length;
+let newsSimilarity = newsData.similarity;
 
 document.addEventListener("DOMContentLoaded", function(event) { 
-    $('.post-module').hover(function() {
-        $(this).find('.description').stop().animate({
-            height: "toggle",
-            opacity: "toggle"
-        }, 300);
-    });
     
     for(let i = 0; i < noOfArticles; i++) {
 
@@ -25,11 +20,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
         let newsDay = getDay(newsTime);
         let newsMonth = getMonth(newsTime);
         let newsUrl = newsArticle.url;
+        let s_index = newsSimilarity[i];
+        if(s_index < 0)
+            s_index = 0;
 
         let news = "<div class='column' id='column-" + (i+1) + "'>\
             <div class='post-module' id='post-module-" + (i+1) + "'>\
                 <!-- Post Thumbnail-->\
                 <div class='thumbnail' id='thumbnail-" + (i+1) + "'>\
+                    <div class='similarity' id='sim-" + (i+1) + "'></div>\
                     <div class='date'>\
                         <div class='day' id='day-" + (i+1) + "'>27</div>\
                         <div class='month' id='month-" + (i+1) + "'>Mar</div>\
@@ -58,9 +57,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
         document.getElementById('desc-'+(i+1)).innerText = newsDesc;
         document.getElementById('day-'+(i+1)).innerText = newsDay;
         document.getElementById('month-'+(i+1)).innerText = newsMonth;
+        document.getElementById('sim-'+(i+1)).innerText = "Similarity Percentage - " + s_index + "%";
         document.getElementById('url-'+(i+1)).href = newsUrl;
 
     }
+
+    $('.post-module').hover(function() {
+        $(this).find('.description').stop().animate({
+            height: "toggle",
+            opacity: "toggle"
+        }, 300);
+    });
+    
 });
 
 function getDay(newsTime) {

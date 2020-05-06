@@ -58,6 +58,22 @@ body {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
   }
+  .post-module .thumbnail .similarity{
+    position: absolute;
+    top: 20px;
+    right: 400px;
+    z-index: 1;
+    background: #e74c3c;
+    width: 200px;
+    height: 40px;
+    padding: 12.5px 0px;
+    color: #FFFFFF;
+    font-weight: 700;
+    text-align: center;
+    -webkti-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
   .post-module .thumbnail .date .day {
     font-size: 18px;
   }
