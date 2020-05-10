@@ -1,3 +1,5 @@
+let index;
+
 chrome.contextMenus.create({
     id: "select",
     title: "Select",
@@ -7,7 +9,7 @@ chrome.contextMenus.create({
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
     if (info.menuItemId == "select") {
         let tweet = info.selectionText;
-        let tweet_string = "tweet="+tweet;
+        let tweet_string = "tweet=" + tweet + "&sortBy=" + index;
         let xhr = new XMLHttpRequest();
         let theUrl = "http://127.0.0.1:8000/Extension_data/";
         xhr.open("POST", theUrl, true);
@@ -41,4 +43,9 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
             alert("Aborted!");
         }
     }
+});
+
+chrome.runtime.onMessage.addListener(function(response, sender, sendResponse){
+    index = response;
+    alert(index);
 });

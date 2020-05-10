@@ -1,10 +1,27 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Hello World</title>
+        <title>Mini Project</title>
+        <link rel="stylesheet" href="index.css">
     </head>
     <body>
-        <p>Hello World !!!</p>
+        <div class="container">
+            <h1>Social Media Fake News Detector</h1>
+            <br>
+            <h3> sortBy : <p id="sortBy">PublishedAt</p> </h3>
+            <br>
+            <form method = "post" target = "_blank">
+            <div class="page">
+                <div class="select-dropdown">
+                    <select id="select">
+                        <option value = "publishedAt" selected>PublishedAt</option>
+                        <option value = "popularity">Popularity</option>
+                        <option value = "relevancy">Relevancy</option>
+                    </select>
+                </div>
+            </div>
+            </form>
+        </div>
         <script src="popup.js"></script>
     </body>
 </html>

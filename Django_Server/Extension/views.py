@@ -16,8 +16,10 @@ from gensim.models.doc2vec import TaggedDocument, Doc2Vec
 def getTweet(request):
     #Getting post
     tweet = request.POST.get('tweet')
+    sortParam = request.POST.get('sortBy')
     taggeddocs = []
     print(tweet)
+    print(sortParam)
 
     stopwords_en = stopwords.words("english")
 
@@ -31,12 +33,28 @@ def getTweet(request):
     taggeddocs.append(doc1)
 
     nnpkeywords = []
+    nnskeywords = []
+    nnkeywords = []
     for i in doc:
         duo = i
         if(len(duo[1]) > 1):
             if (duo[1]) == 'NNP':
                 nnpkeywords.append(duo[0])
+            if (duo[1]) == 'NNS':
+                nnskeywords.append(duo[0])
+            if (duo[1]) == 'NN':
+                nnkeywords.append(duo[0])
     
+    pos = len(nnpkeywords)
+    if len(nnpkeywords) <= 2:
+        for i in range(len(nnskeywords)): 
+            nnpkeywords.insert(i + pos, nnskeywords[i])
+
+    pos = len(nnpkeywords)
+    if len(nnpkeywords) <= 2:
+        for i in range(len(nnkeywords)): 
+            nnpkeywords.insert(i + pos, nnkeywords[i])
+
     #News API calls
     api_key = '7f4ed22aa44b4226ab27a1cb363acf85'
     url = 'https://newsapi.org/v2/everything?'
@@ -50,7 +68,7 @@ def getTweet(request):
             'language': 'en', 
             'from': date.today() - timedelta(30),
             'to': date.today(),
-            'sortBy': 'publishedAt',
+            'sortBy': sortParam,
         }
 
         #Getting response 
@@ -74,7 +92,7 @@ def getTweet(request):
 
             similar = []
             for i in range(6):
-                wordlist = nltk.word_tokenize(result[i]['content'])
+                wordlist = nltk.word_tokenize(result[i]['title'] + result[i]['description'])
                 text = preprocessing(wordlist, stopwords_en)
                 print(text)
                 doc2 = TaggedDocument(words=text, tags=[u'NEWS_2'])
