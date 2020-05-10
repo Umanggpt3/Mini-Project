@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "Mini Project",
 	"description": "Project having 1.0 Credit",
-	"version": "0.01",
+	"version": "1.0",
 	"author": "Umang Gupta",
 	"background": {
 		"scripts": ["background.js"],

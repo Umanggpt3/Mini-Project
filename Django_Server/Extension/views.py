@@ -17,6 +17,9 @@ def getTweet(request):
     #Getting post
     tweet = request.POST.get('tweet')
     sortParam = request.POST.get('sortBy')
+    if sortParam == 'undefined':
+        sortParam = 'relevancy'
+
     taggeddocs = []
     print(tweet)
     print(sortParam)
@@ -92,7 +95,10 @@ def getTweet(request):
 
             similar = []
             for i in range(6):
-                wordlist = nltk.word_tokenize(result[i]['title'] + result[i]['description'])
+                if result[i]['description'] == None:
+                    wordlist = nltk.word_tokenize(result[i]['title'])
+                else:
+                    wordlist = nltk.word_tokenize(result[i]['title'] + result[i]['description'])
                 text = preprocessing(wordlist, stopwords_en)
                 print(text)
                 doc2 = TaggedDocument(words=text, tags=[u'NEWS_2'])
